@@ -1,0 +1,47 @@
+<form (ngSubmit)="save()" name="form" #f="ngForm" class="needs-validation" novalidate>
+    <fieldset>
+      <legend>Authorizations/Specifications required for the project</legend>
+      <div class="form-group">
+          <div class="view-toolbar grid-actions clearfix">
+            <div class="info">
+                <label class="required">Authorisations</label>
+            </div>
+            <div class="pull-right toolbar-actions">
+              <div class="input-group pull-left">
+                <button type="button" class="btn btn-sm btn-primary" title="create" (click)="UploadAuthorization()">
+                  <span class="fa fa-plus-circle" aria-hidden="true"></span>  Add authorisation
+                </button>
+              </div>
+            </div>
+          </div>
+          <tia-project-authorization-list [authorizations]="authorizations" (authorizationActions)="UpdateAuthorizations($event)"></tia-project-authorization-list>
+          <div class="view-empty message" role="presentation" tabindex="0" style="display: block;" *ngIf="!authorizations"><div class="alert alert-block alert-warning">There are no records to display.</div></div>
+        </div>
+
+      <div class="form-group">
+          <div class="view-toolbar grid-actions clearfix">
+            <div class="info">
+                <label class="required">specifications</label>
+            </div>
+            <div class="pull-right toolbar-actions">
+              <div class="input-group pull-left">
+                <button type="button" class="btn btn-sm btn-primary" title="create" (click)="UploadSpecification()">
+                  <span class="fa fa-plus-circle" aria-hidden="true"></span>  Add specification
+                </button>
+              </div>
+            </div>
+          </div>
+            <tia-project-specification-list [specifications]="specifications" (specificationAction)="UpdateSpecifications($event)"></tia-project-specification-list>
+          <div class="view-empty message" role="presentation" tabindex="0" style="display: block;" *ngIf="!specifications"><div class="alert alert-block alert-warning">There are no records to display.</div></div>
+        </div>
+        <div class="tia-view-controls d-flex justify-content-between">
+          <button class="btn btn-light">Save Draft</button>
+          <div class="btn-group">
+              <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+              <button class="btn btn-primary" type="submit" >
+                  Next <fa name="angle-right"></fa>
+              </button>
+          </div>
+        </div>
+    </fieldset>
+  </form>

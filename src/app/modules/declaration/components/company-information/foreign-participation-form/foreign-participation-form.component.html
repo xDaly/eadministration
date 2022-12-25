@@ -1,0 +1,22 @@
+<form (ngSubmit)="foreignParticiptionForm.form.valid && submit()" #foreignParticiptionForm="ngForm" name="form" class="needs-validation">
+  <div class="form-group">
+    <label class="required">Participant name</label>
+    <input class="form-control" name="participantName" #participantName="ngModel" [(ngModel)]="foreignParticipation.participantName" [ngClass]="{'is-invalid': foreignParticiptionForm.submitted && participantName.invalid, 'is-valid': foreignParticipation.participantName}" required>
+  </div>
+  <div class="form-group">
+  <label class="required">Nationality</label>
+  <select class="custom-select" name="nationality" #nationality="ngModel" [compareWith]="compareById"  [(ngModel)]="foreignParticipation.nationality" [ngClass]="{'is-invalid': foreignParticiptionForm.submitted && nationality.invalid, 'is-valid': foreignParticipation.nationality}" required>
+    <option *ngFor="let nationality of countries" [ngValue]="nationality" >{{nationality.label}}</option>
+  </select>
+  </div>
+  <div class="form-group">
+    <label class="required">Participation Amount</label>
+    <div class="input-group">
+    <input autocomplete="off" type="number" class="form-control" name="participationAmount" #participationAmount="ngModel" tiaOnlyNumber="true" [(ngModel)]="foreignParticipation.participationAmount" (change)="calculate()" [ngClass]="{'is-invalid': foreignParticiptionForm.submitted && participationAmount.invalid, 'is-valid': foreignParticipation.participationAmount}" required>
+    <div class="input-group-append"><span class="input-group-text"> {{foreignParticipation.participationRate}}% -- 100 % </span></div>
+    </div>
+  </div>
+  <button class="btn btn-primary" [disabled]="!foreignParticiptionForm.form.valid || !isValidForeignParticipation">
+    Add participation
+  </button>
+</form>

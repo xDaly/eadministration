@@ -1,0 +1,14 @@
+
+<div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
+  <div class="dropzone dropzone-container" [dropzone]="config" (error)="onUploadError($event)" (success)="onUploadSuccess($event)" ></div>
+</div>
+<br>
+ <div class="form-row">
+    <div class="col-md-1 mb3">
+      <button type="button" class="btn btn-danger" (click)="Clear()">
+        Clear
+      </button>
+    </div>
+  </div>
+
+

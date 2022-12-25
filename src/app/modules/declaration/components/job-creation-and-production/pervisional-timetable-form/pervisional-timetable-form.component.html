@@ -1,0 +1,28 @@
+<form class="needs-validation" [formGroup]="timeTableForm" *ngIf="timeTable" novalidate>
+    <fieldset>
+        <legend>Provisional timetable for project implementation</legend>
+        <div class="form-group">
+            <label class="control-label required">{{ timeTable.orderDateTitle }}: Year</label>
+            <input autocomplete="off" class="form-control" formControlName="orderDate" name="order_date">
+            <div class="invalid-feedback" *ngIf="timeTableForm.controls['orderDate'].errors?.validYear">
+                This field must be a Year
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label required">Establishment of the company: Year</label>
+            <input autocomplete="off" class="form-control" formControlName="expectedCreationDate"
+                name="expected_creation_date">
+            <div class="invalid-feedback" *ngIf="timeTableForm.controls['expectedCreationDate'].errors?.validYear">
+                This field must be a Year
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="required">Entry into operating activity: Year</label>
+            <input autocomplete="off" class="form-control" formControlName="exploitationActivityDate"
+                name="exploitation_activity_date">
+            <div class="invalid-feedback" *ngIf="timeTableForm.controls['exploitationActivityDate'].errors?.validYear">
+                This field must be a Year
+            </div>
+        </div>
+    </fieldset>
+</form>

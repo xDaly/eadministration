@@ -1,0 +1,51 @@
+<fieldset>
+    <legend>Raw and semi-finished materials</legend>
+    <button (click)="create()" class="btn btn-sm btn-primary">
+        <fa name="plus-circle"></fa>Create
+    </button>
+    <table class="table table-hover table-condensed table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Designation</th>
+                <th scope="col">Code</th>
+                <th scope="col">Origin</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Value</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let material of materials">
+                <td>
+                    {{material.product}}</td>
+                <td>
+                    {{material.code}}</td>
+                <td>
+                    {{material.origin}}</td>
+                <td>
+                    {{material.quantity}}</td>
+                <td>
+                    {{material.unit}}</td>
+                <td>
+                    {{material.value}}</td>
+                <td class="actions-control">
+                    <div class="d-inline-block" ngbDropdown>
+                        <button class="btn" ngbDropdownToggle>
+                            <fa name="angle-down"></fa>
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button (click)="edit(material)" class="dropdown-item">
+                                <fa name="edit"></fa>Edit</button>
+                            <button (click)="delete(material)" class="dropdown-item">
+                                <fa name="trash"></fa>Delete</button>
+                            <button (click)="show(material)" class="dropdown-item">
+                                <fa name="info"></fa>View Details</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>    
+    <div *ngIf="materials && materials.length === 0" class="alert empty-row" role="alert">There are no records</div>
+</fieldset>

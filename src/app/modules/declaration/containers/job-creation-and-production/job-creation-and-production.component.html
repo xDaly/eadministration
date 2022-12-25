@@ -1,0 +1,20 @@
+<h2>Job Creation & Production</h2>
+<fieldset>
+    <legend>Job creation</legend>
+    <tia-edit-table [rows]="employeesList" [splatMap]="employeeSplat" [actions]="true" (model)="getEmployee($event)">
+    </tia-edit-table>
+</fieldset>
+<div #productionList></div>
+<tia-material-list (materialOutput)="getMaterial($event)" [materials]="materialsList"></tia-material-list>
+<tia-pervisional-timetable-form (timeTableOutput)="getTimeTable($event)" [timeTable]="timeTable">
+</tia-pervisional-timetable-form>
+<div class="tia-view-controls d-flex justify-content-between">
+    <button class="btn btn-light">Save Draft</button>
+    <div class="btn-group">
+        <button (click)="stepperService.backward()" class="btn btn-light" type="button">Previous</button>
+        <button (click)="next()" class="btn btn-primary" type="submit">
+            Next
+            <fa name="angle-right"></fa>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Permissions</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="">Name</label>
+        <input class="form-control" type="text">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="">Choose role</label>
+        <select name="" id="" class="form-control">
+          <option *ngFor="let role of roles | async" [value]="role.id">{{ role.label }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

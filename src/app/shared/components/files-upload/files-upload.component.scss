@@ -1,0 +1,23 @@
+@import '~dropzone/dist/min/dropzone.min.css';
+
+.header {
+    background-image: linear-gradient(to right, red , rgb(238, 16, 101)); /* Standard syntax (must be last) */
+}
+ngx-dropzone {
+  margin: 20px;
+}
+
+.custom-dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  border: 8px double #518;
+  border-radius: 10px;
+
+  &.hovered {
+    border: 8px double #954;
+    background: #FF4;
+    font-size: 20px;
+  }
+}

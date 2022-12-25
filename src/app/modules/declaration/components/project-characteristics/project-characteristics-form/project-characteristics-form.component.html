@@ -1,0 +1,236 @@
+<form (ngSubmit)="submit()">
+    <fieldset>
+        <legend>Investissements (TND)</legend>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Terrains</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="terrain"
+                            [(ngModel)]="this.scheme.investmentFinance.terrain" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Constractions</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="constractions"
+                            [(ngModel)]="this.scheme.investmentFinance.constractions" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Planning</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="planning"
+                            [(ngModel)]="this.scheme.investmentFinance.planning" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Incorporation costs</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="incorporateCost"
+                            [(ngModel)]="this.scheme.investmentFinance.incorporateCost" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Imported equipment</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="importedEquipment"
+                            [(ngModel)]="this.scheme.investmentFinance.importedEquipment" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Local equipment</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="localEquipment"
+                            [(ngModel)]="this.scheme.investmentFinance.localEquipment" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Working capital</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="workingCapital"
+                            [(ngModel)]="this.scheme.investmentFinance.workingCapital" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Means of transport</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="meansOfTransport"
+                            [(ngModel)]="this.scheme.investmentFinance.meansOfTransport" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>The costs of the study</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="studyCosts"
+                            [(ngModel)]="this.scheme.investmentFinance.studyCosts" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="control col">
+                <label>Other expenses</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" name="otherExpenses"
+                        [(ngModel)]="this.scheme.investmentFinance.otherExpenses" tiaOnlyNumber="true">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">TND</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mb-3 mt-3 pt-3 total-invoice">
+            <div>Total</div>
+            <div class="amount">{{ investmentTotal }} TND</div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Financement</legend>
+        <div class="d-flex mb-3 mt-3 pt-3">
+            <p>{{ capitalTitle }}: </p>
+            <div>{{ scheme.capital }} TND</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Long term credit</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="longTermCredit"
+                            [(ngModel)]="this.scheme.investmentFinance.longTermCredit" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Medium term credit</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="mediumTermCredit"
+                            [(ngModel)]="this.scheme.investmentFinance.mediumTermCredit" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control">
+                    <label>Short term credit</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="shortTermCredit"
+                            [(ngModel)]="this.scheme.investmentFinance.shortTermCredit" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control">
+                    <label>Supplier credit</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="supplierCredit"
+                            [(ngModel)]="this.scheme.investmentFinance.supplierCredit" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control">
+                    <label>Foreign Credit</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="foreingCredit"
+                            [(ngModel)]="this.scheme.investmentFinance.foreingCredit" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control">
+                    <label>Leasing</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="leasing"
+                            [(ngModel)]="this.scheme.investmentFinance.leasing" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control">
+                    <label>Other resources</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="otherResources"
+                            [(ngModel)]="this.scheme.investmentFinance.otherResources" tiaOnlyNumber="true">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">TND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mb-3 mt-3 pt-3 total-invoice">
+            <div>Total</div>
+            <div class="amount">{{ financeTotal }} TND</div>
+        </div>
+    </fieldset>
+</form>

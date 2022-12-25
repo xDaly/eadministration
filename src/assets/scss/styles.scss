@@ -1,0 +1,45 @@
+@import "base/_variables";
+@import "base/handlers";
+
+/**
+    Bootstrap
+*/
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/variables";
+
+/**
+    Partials
+*/
+@import "partials/responsive";
+@import "partials/header";
+@import "partials/footer";
+
+/**
+    Components
+*/
+@import "~ngx-toastr/toastr-bs4-alert";
+@import "components/datatable";
+@import "components/tabs";
+@import "components/toast";
+@import "components/form";
+@import "components/modal";
+@import "components/dropZone";
+@import "components/datepicker";
+@import "components/controls";
+@import "components/link";
+@import "components/buttons";
+@import "components/card";
+@import "components/fab";
+@import '~dropzone/dist/min/dropzone.min.css';
+
+@import "admin/sb-admin-2.scss";
+
+body{
+    background-color: $light;
+}
+
+.tia-view-controls{
+    border-top: 1px solid #ededed;
+    padding-top: 2rem;
+    margin-top: 1rem;
+}

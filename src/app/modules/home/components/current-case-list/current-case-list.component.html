@@ -1,0 +1,38 @@
+<div *ngIf="delarations">
+  <table class="table table-responsive" *ngIf="delarations.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">Request Number</th>
+        <th scope="col">Reference</th>
+        <th scope="col">Social Reason</th>
+        <th scope="col">Type demande</th>
+        <th scope="col">Project Nature</th>
+        <th scope="col">Field Of Activity</th>
+        <th scope="col">Sector</th>
+        <th scope="col">Activity</th>
+        <th scope="col">Sub Activity</th>
+        <th scope="col">Request Status</th>
+        <th scope="col">Created On</th>
+        <th scope="col">Date of Issue</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let declaration of delarations">
+        <td scope="col">{{ declaration.id }}</td>
+        <td scope="col">{{ declaration.reference }}</td>
+        <td scope="col">{{ declaration.socialReason}}</td>
+        <td scope="col">Type demande</td>
+        <td scope="col">{{ type[declaration.project.type] }}</td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col">{{ declaration.project.activity.label }}</td>
+        <td scope="col"></td>
+        <td scope="col">{{ declaration.Status }}</td>
+        <td scope="col">{{ declaration.createdAt | date:'medium' }}</td>
+        <td scope="col">Date of Issue</td>
+        <td><a [routerLink]="[ '/service-declaration', declaration.id, 'edit' ]">Edit</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

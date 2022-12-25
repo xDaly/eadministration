@@ -1,0 +1,15 @@
+.modal-content{
+    border-radius: $sm-radius;
+    box-shadow: 0px 2px 32px rgba($color: $dark, $alpha: .5)
+}
+
+.modal-header{
+    background-color: $primary;
+    border-radius: $sm-radius $sm-radius 0 0;
+    color: $light;
+    .close{
+        span{
+            color: $light;
+        }
+    }
+}

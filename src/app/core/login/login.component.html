@@ -1,0 +1,77 @@
+<div class="bg">
+    <div class="container pd-50">
+        <div class="myform form card pd-50">
+            <div class="logo mb-3">
+                <div class="col-md-12 text-center">
+                    <h1><i>Login</i></h1>
+                </div>
+            </div>
+            <form (ngSubmit)="logIn()" [formGroup]="loginForm">
+                <div class="form-group">
+                    <label>Email address or username</label>
+                    <input class="form-control" formControlName="email" placeholder="Enter email or username"></div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control" formControlName="password" placeholder="Enter Password" type="password">
+                </div>
+                <div class="form-group">
+                    <div class="custom-control-lg custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="remember-me" id="remember-me" formControlName="rememberMe">
+                        <label class="custom-control-label" for="remember-me">Remember Me</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="text-center">By signing up you accept our
+                        <a href="#">Terms Of Use</a>
+                    </p>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-block mybtn btn-primary tx-tfm"
+                        [disabled]="loginForm.invalid">Login</button>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="login-or">
+                        <hr class="hr-or">
+                        <span class="span-or">or</span>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <p class="text-center">
+                        <a class="google btn btn-light">
+                            <i class="fa fa-google-plus"></i>
+                            Signup using Google
+                        </a>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p class="text-center">Don't have account?
+                        <a href="#" id="signup">Sign up here</a>
+                    </p>
+                </div>
+            </form>
+            <form (ngSubmit)="signup()" [formGroup]="signupForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input class="form-control" formControlName="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input class="form-control" formControlName="email" placeholder="Enter email" type="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" formControlName="password" placeholder="Enter Password" type="password">
+                </div>
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    <input class="form-control" formControlName="confirmPassword" placeholder="Enter Password"
+                        type="password">
+                </div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-block mybtn btn-primary tx-tfm"
+                        [disabled]="signupForm.invalid">Sign-Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

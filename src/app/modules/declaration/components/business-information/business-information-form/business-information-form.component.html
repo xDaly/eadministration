@@ -1,0 +1,251 @@
+<form (ngSubmit)="businessInformationForm.form.valid && save()" name="form" #businessInformationForm="ngForm"
+  class="needs-validation">
+  <fieldset>
+    <!--information about the company-->
+    <legend> Business information</legend>
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Name (business name /trade name)</label>
+        <input class="form-control" name="businessName" #businessName="ngModel"
+          [(ngModel)]="businessInformation.companyName"
+          [ngClass]="{'is-invalid': businessInformationForm.submitted && businessName.invalid, 'is-valid': businessInformation.companyName}"
+          required>
+        <div *ngIf="businessInformationForm.submitted && businessName.invalid" class="invalid-feedback">
+          <div *ngIf="businessName.errors.required"> please put your (business name /trade name)</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Legal Representative</label>
+        <input class="form-control" name="legalRepresentative" #legalRepresentative="ngModel"
+          [(ngModel)]="businessInformation.legalRepresentative"
+          [ngClass]="{'is-invalid': businessInformationForm.submitted && legalRepresentative.invalid, 'is-valid': businessInformation.legalRepresentative}"
+          required>
+        <div *ngIf="businessInformationForm.submitted && legalRepresentative.invalid" class="invalid-feedback">
+          <div *ngIf="legalRepresentative.errors.required"> please put your legal representative</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-row ">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Legal form</label>
+        <select [disabled]="projectType != 0" class="custom-select" name="legalForm" #legalForm="ngModel" [(ngModel)]="businessInformation.legalFormId" (change)="verifyLegalForm()"
+          [ngClass]="{'is-invalid': businessInformationForm.submitted && legalForm.invalid, 'is-valid': businessInformation.legalFormId}"
+          required>
+          <option *ngFor="let legalForm of legalForms" [ngValue]="legalForm.id">{{legalForm.label}}</option>
+        </select>
+        <div *ngIf="businessInformationForm.submitted && legalForm.invalid" class="invalid-feedback">
+          <div *ngIf="legalForm.errors.required"> please select your legal form</div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="publicSaving">
+        <label>UC legal form</label>
+        <div class="custom-control custom-radio btn-group btn-group-toggle" ngbRadioGroup name="publicSavingCalled"
+          [(ngModel)]="businessInformation.publicSavingCalled">
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" [value]="true"> UC call for public savings
+          </label>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" [value]="false"> UC does not call for public savings
+          </label>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="businessInformation.legalFormId == 10">
+        <label class="required">Other Legal Form</label>
+        <input class="form-control" name="otherLegalForm" #otherLegalForm="ngModel"
+        [(ngModel)]="businessInformation.otherLegalForm" [ngClass]="{'is-valid': businessInformation.otherLegalForm}">
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Head office</label>
+        <input class="form-control" name="headOffice" #headOffice="ngModel" [(ngModel)]="businessInformation.headOffice"
+          [ngClass]="{'is-invalid': businessInformationForm.submitted && headOffice.invalid, 'is-valid': businessInformation.headOffice}"
+          required>
+        <div *ngIf="businessInformationForm.submitted && headOffice.invalid" class="invalid-feedback">
+          <div *ngIf="headOffice.errors.required"> please put your head office</div>
+        </div>
+      </div>
+    </div>
+    <!--extension/ renewal fields-->
+    <div *ngIf="projectType != 0">
+      <div *ngIf="promotorType == 0">
+        <div class="form-group">
+          <label>Activity Description</label>
+          <textarea class="form-control" name="activityDescription"
+          #activityDescription="ngModel"[(ngModel)]="businessInformation.activityDescription"
+          [ngClass]="{ 'is-valid': businessInformation.activityDescription}"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Own funds</label>
+            <div class="input-group">
+            <input class="form-control" type="number" [(ngModel)]="businessInformation.ownFunds" name="ownFunds"
+              #ownFunds="ngModel"
+              [ngClass]="{ 'is-invalid': businessInformationForm.submitted && ownFunds.invalid, 'is-valid': businessInformation.ownFunds }"
+              required tiaOnlyNumber="true">
+            <div class="input-group-append">
+              <span class="input-group-text">TND</span>
+            </div>
+            <div *ngIf="businessInformationForm.submitted && ownFunds.invalid" class="invalid-feedback">
+                <div *ngIf="ownFunds.errors.required"> please put your own Funds</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="required">Own funds (Extension)</label>
+            <div class="input-group">
+            <input class="form-control" type="number" [(ngModel)]="businessInformation.extensionOwnFunds" name="extensionOwnFunds"
+              #extensionOwnFunds="ngModel"
+              [ngClass]="{ 'is-invalid': businessInformationForm.submitted && extensionOwnFunds.invalid, 'is-valid': businessInformation.extensionOwnFunds }"
+              required tiaOnlyNumber="true">
+            <div class="input-group-append">
+              <span class="input-group-text">TND</span>
+            </div>
+            <div *ngIf="businessInformationForm.submitted && extensionOwnFunds.invalid" class="invalid-feedback">
+                <div *ngIf="extensionOwnFunds.errors.required"> please put your own Funds extension</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="promotorType == 1">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+              <label class="required">Share Capital</label>
+              <div class="input-group">
+              <input class="form-control" type="number" [(ngModel)]="businessInformation.shareCapital" name="shareCapital"
+                #shareCapital="ngModel"
+                [ngClass]="{ 'is-invalid': businessInformationForm.submitted && shareCapital.invalid, 'is-valid': businessInformation.shareCapital }"
+                required tiaOnlyNumber="true">
+              <div class="input-group-append">
+                <span class="input-group-text">TND</span>
+              </div>
+              <div *ngIf="businessInformationForm.submitted && shareCapital.invalid" class="invalid-feedback">
+                  <div *ngIf="shareCapital.errors.required"> please put your share capital</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="required">Amount of foreign equity</label>
+              <div class="input-group">
+              <input class="form-control" type="number" [(ngModel)]="businessInformation.foreignEquityAmount" name="foreignEquityAmount"
+                #foreignEquityAmount="ngModel"
+                [ngClass]="{ 'is-invalid': businessInformationForm.submitted && foreignEquityAmount.invalid, 'is-valid': businessInformation.foreignEquityAmount }"
+                required tiaOnlyNumber="true">
+              <div class="input-group-append">
+                <span class="input-group-text">TND</span>
+              </div>
+              <div *ngIf="businessInformationForm.submitted && foreignEquityAmount.invalid" class="invalid-feedback">
+                  <div *ngIf="foreignEquityAmount.errors.required"> please put the amount of the foreign equity</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="required">Capital increase</label>
+              <div class="input-group">
+              <input class="form-control" type="number" [(ngModel)]="businessInformation.capitalIncrease" name="capitalIncrease"
+                #capitalIncrease="ngModel"
+                [ngClass]="{ 'is-invalid': businessInformationForm.submitted && capitalIncrease.invalid, 'is-valid': businessInformation.capitalIncrease }"
+                required tiaOnlyNumber="true">
+              <div class="input-group-append">
+                <span class="input-group-text">TND</span>
+              </div>
+              <div *ngIf="businessInformationForm.submitted && capitalIncrease.invalid" class="invalid-feedback">
+                  <div *ngIf="capitalIncrease.errors.required"> please put the capital increase</div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="projectType !== 0">
+      <div class="form-row">
+          <div class="form-group col-md-6 mb-3">
+            <label class="required">Tel / GSM </label>
+            <ngx-intl-tel-input
+              [cssClass]="{'is-invalid': businessInformationForm.submitted && phoneNumber.invalid, 'is-valid': phoneNumb, 'form-control': true}"
+              [preferredCountries]="['tn','fr']" [enableAutoCountrySelect]="true" name="phoneNumber" #phoneNumber="ngModel"
+              [(ngModel)]="phoneNumb" required></ngx-intl-tel-input>
+          </div>
+          <div class="form-group col-md-6 mb-3">
+            <label>Fax</label>
+            <ngx-intl-tel-input [cssClass]="{'is-valid': faxNumb, 'form-control': true}" [preferredCountries]="['tn','fr']"
+            [enableAutoCountrySelect]="true" name="faxNumber" [(ngModel)]="faxNumb"></ngx-intl-tel-input>
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4 mb-3">
+          <label class="required">Email adress</label>
+          <input email class="form-control" name="email" #email="ngModel" [(ngModel)]="businessInformation.email"
+            [ngClass]="{'is-invalid': businessInformationForm.submitted && email.invalid, 'is-valid': email.valid}" required>
+          <div *ngIf="businessInformationForm.submitted && email.invalid" class="invalid-feedback">
+            <div *ngIf="email.errors.required"> please put the company email</div>
+            <div *ngIf="email.errors.email">the company Email must be a valid email address</div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  <!--documents-->
+    <div *ngIf="projectType == 0 || promotorType != 0" class="form-group">
+      <div class="view-toolbar grid-actions clearfix">
+        <div class="info">
+          <label class="required">legal representative identity piece</label>
+        </div>
+        <file-uploader [acceptedFiles]="LegalRepresentativeAcceptedFiles" [FileInfo]="legalRepresentativeDocumentInvoice" (fileName)="GetLegalRepresentativeIdFileName($event)"></file-uploader>
+      </div>
+      <br>
+      <div class="alert alert-danger"
+        *ngIf="businessInformationForm.submitted && !businessInformation.legalRepresentativeIdentityPiece" role="alert">
+        please provide your legal representaive identity document
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="view-toolbar grid-actions clearfix">
+        <div class="info">
+          <label for="Identity_Piece" class="required" *ngIf="promotorType != 1">commercial register copy </label>
+          <label for="Identity_Piece" class="required" *ngIf="promotorType == 1">Valid commercial register copy (3 months) </label>
+        </div>
+        <file-uploader [acceptedFiles]="CommerciaRegisterCopyAcceptedFile" [FileInfo]="commercialRegisterDocumentInvoice" (fileName)="GetCommericialRegisterFileName($event)"></file-uploader>
+      </div>
+      <br>
+      <div class="alert alert-danger"
+        *ngIf="businessInformationForm.submitted && !businessInformation.commercialRegisterCopy" role="alert">
+        please provide a copy of your 3 months commercial register copy
+      </div>
+    </div>
+    <div *ngIf="projectType != 0 && promotorType == 1" class="form-group">
+        <div class="view-toolbar grid-actions clearfix">
+          <div class="info">
+            <label class="required">Last Balance</label>
+          </div>
+          <file-uploader [acceptedFiles]="LastBalanceCheckAcceptedFile" [FileInfo]="lastBalanceCheckDocumentInvoice" (fileName)="GetLastBalanceCheckFileName($event)"></file-uploader>
+        </div>
+        <br>
+        <div class="alert alert-danger"
+          *ngIf="businessInformationForm.submitted && !businessInformation.lastBalanceCheckInvoice" role="alert">
+          please provide last balance check invoice
+        </div>
+      </div>
+      <div *ngIf="projectType !=0 && promotorType == 1" class="form-group">
+          <div class="view-toolbar grid-actions clearfix">
+            <div class="info">
+              <label class="required">Joined accounts</label>
+            </div>
+            <file-uploader [acceptedFiles]="joinedAccountAcceptedFile" [FileInfo]="joinedAccountInvoice" (fileName)="GetJoinedAccountInvoice($event)"></file-uploader>
+          </div>
+          <br>
+          <div class="alert alert-danger"
+            *ngIf="businessInformationForm.submitted && !businessInformation.joinedAccountInvoice" role="alert">
+            please provide the joined account invoice
+          </div>
+        </div>
+    <div class="tia-view-controls d-flex justify-content-between">
+      <button class="btn btn-light" type="button" (click)="SaveDraft()">Save Draft</button>
+      <div class="btn-group">
+          <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+          <button class="btn btn-primary" type="submit">
+              Next <fa name="angle-right"></fa>
+          </button>
+      </div>
+      </div>
+  </fieldset>
+</form>

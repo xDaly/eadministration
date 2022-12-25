@@ -1,0 +1,170 @@
+<form (ngSubmit)="orientationForm.form.valid && save()" name="form" #orientationForm="ngForm" class="needs-validation" *ngIf="orientation">
+  <fieldset>
+    <legend>Declaration Orientation</legend>
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Project Type</label>
+        <select class="custom-select" [(ngModel)]="orientation?.project.type" name="projectType" #projectType="ngModel"
+          [ngClass]="{ 'is-invalid': orientationForm.submitted && projectType.invalid, 'is-valid': orientation.project.type }"  required>
+          <option [value]="-1" selected></option>
+          <option [value]="0">Creation</option>
+          <option [value]="1">Extension</option>
+          <option [value]="2">Renewal</option>
+        </select>
+        <div *ngIf="orientationForm.submitted && projectType.invalid" class="invalid-feedback">
+          <div *ngIf="projectType.errors.required"> please select a project type</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Promotor Type</label>
+        <select class="custom-select d-inline-block" [(ngModel)]="orientation?.promotor.type" name="promotorType"
+          #promotorType="ngModel"
+          [ngClass]="{ 'is-invalid': orientationForm.submitted && promotorType.invalid, 'is-valid': orientation.promotor.type }" required>
+          <option [value]="-1" selected></option>
+          <option [value]="0">Natural Person</option>
+          <option [value]="1">Corporate Body</option>
+        </select>
+        <div *ngIf="orientationForm.submitted && promotorType.invalid" class="invalid-feedback">
+          <div *ngIf="promotorType.errors.required"> please select a promotor type</div>
+        </div>
+      </div>
+    </div>
+    <!--renewal and extension fields -->
+    <div *ngIf="(orientation.project.type && orientation.project.type != 0)">
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+            <label class="required">Reference of the initial project (ADI)</label>
+                <input class="form-control" type="number" tiaOnlyNumber="true" [(ngModel)]="orientation.project.initialProjectReference" name="initialProjectReference"
+                #initialProjectReference="ngModel"
+                [ngClass]="{ 'is-invalid': orientationForm.submitted && initialProjectReference.invalid, 'is-valid': orientation.project.initialProjectReference }"
+                required>
+                <div *ngIf="orientationForm.submitted && initialProjectReference.invalid" class="invalid-feedback">
+                    <div *ngIf="initialProjectReference.errors.required"> please put the reference of the initial project</div>
+                  </div>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+            <label class="required">Registration number in the trade register</label>
+                <input class="form-control" type="number" tiaOnlyNumber="true" [(ngModel)]="orientation.project.registrationNumber" name="registrationNumber"
+                #registrationNumber="ngModel"
+                [ngClass]="{ 'is-invalid': orientationForm.submitted && registrationNumber.invalid, 'is-valid': orientation.project.registrationNumber }"
+                required>
+                <div *ngIf="orientationForm.submitted && registrationNumber.invalid" class="invalid-feedback">
+                    <div *ngIf="registrationNumber.errors.required"> please put the registration number</div>
+                  </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-3">
+            <label class="required">Tax and customs ID</label>
+                <input class="form-control" type="number" tiaOnlyNumber="true" [(ngModel)]="orientation.project.taxCustomsId" name="taxCustomsId"
+                #taxCustomsId="ngModel"
+                [ngClass]="{ 'is-invalid': orientationForm.submitted && taxCustomsId.invalid, 'is-valid': orientation.project.taxCustomsId }"
+                required>
+                <div *ngIf="orientationForm.submitted && taxCustomsId.invalid" class="invalid-feedback">
+                    <div *ngIf="taxCustomsId.errors.required"> please put the tax and customs Id</div>
+                  </div>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+            <label class="required">CNSS number</label>
+                <input class="form-control" type="number" tiaOnlyNumber="true" [(ngModel)]="orientation.project.cnssNumber" name="CNSSnumber"
+                #CNSSnumber="ngModel"
+                [ngClass]="{ 'is-invalid': orientationForm.submitted && CNSSnumber.invalid, 'is-valid': orientation.project.cnssNumber }"
+                required>
+                <div *ngIf="orientationForm.submitted && CNSSnumber.invalid" class="invalid-feedback">
+                    <div *ngIf="CNSSnumber.errors.required"> please put the CNSS number</div>
+                  </div>
+            </div>
+        </div>
+      </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Investment Cost</label>
+        <div class="input-group">
+          <input class="form-control" type="number" [(ngModel)]="orientation.project.investmentCost"
+            name="investmentCost" #investmentCost="ngModel" required tiaOnlyNumber="true">
+          <div class="input-group-append">
+            <span class="input-group-text">TND</span>
+          </div>
+          <div *ngIf="(orientationForm.submitted && investmentCost.invalid && investmentCost.errors.required)"
+            class="invalid-feedback">
+            please specify the investment cost
+          </div>
+          <div class="invalid-feedback"
+            *ngIf="investmentCost.touched && (settingsService.current.minInvestmentCost || !investmentCost.invalid)">
+            the investment cost must be equal or greater than
+            {{ settingsService.current.minInvestmentCost }}
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Field Of Activity</label>
+        <select class="custom-select" [(ngModel)]="orientation.activityField.id" name="activityField"
+          #activityField="ngModel"
+          [ngClass]="{ 'is-invalid': orientationForm.submitted && activityField.invalid, 'is-valid': orientation.activityField.id }"
+          (change)="getSectors(orientation.activityField.id)" required>
+          <option [value]="0" selected></option>
+          <option *ngFor="let activityField of activityFields$ | async" [value]="activityField.id">
+            {{ activityField.label }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Sector</label>
+        <select class="custom-select" [(ngModel)]="orientation.sector.id" name="Sector" #sector="ngModel"
+          [ngClass]="{ 'is-invalid': orientationForm.submitted && sector.invalid,  'is-valid': orientation.sector.id }"
+          (change)="getActivities(orientation.sector.id)" required>
+          <option [value]="0" selected></option>
+          <option *ngFor="let sector of sectors$ | async" [value]="sector.id">{{sector.label}}
+          </option>
+        </select>
+        <div *ngIf="orientationForm.submitted && sector.invalid" class="invalid-feedback">
+          <div *ngIf="sector.errors.required"> please select a sector </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Activity</label>
+        <select class="custom-select" [(ngModel)]="orientation.activity.id" name="Activity" #activity="ngModel"
+          [ngClass]="{ 'is-invalid': orientationForm.submitted && activity.invalid, 'is-valid': orientation.activity.id }"
+          (change)="getSubActivities(orientation.activity.id)" required>
+          <option [value]="0" selected></option>
+          <option *ngFor="let activity of activities$ | async" [value]="activity.id">
+            {{activity.label}}</option>
+        </select>
+        <div *ngIf="orientationForm.submitted && activity.invalid" class="invalid-feedback">
+          <div *ngIf="activity.errors.required"> please select an activity </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label>Sub-activity</label>
+        <select class="custom-select" [(ngModel)]="orientation.subActivity.id" name="subActivity"
+          [ngClass]="{'is-valid': orientation.subActivity.id}">
+          <option [value]="0" selected></option>
+          <option *ngFor="let sb of subActivities$ | async" [value]="sb.id" title="tooltip">
+            {{sb.label}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label>Secondary activities</label>
+        <select class="custom-select" [(ngModel)]="orientation.secondaryActivity.id" name="secondaryActivity"
+          [ngClass]="{'is-valid': orientation.secondaryActivity.id}">
+          <option [value]="0" selected></option>
+          <option *ngFor="let sa of secondaryActivities$ | async" [value]="sa.id">
+            {{sa.label}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="tia-view-controls d-flex justify-content-between">
+      <button class="btn btn-light" type="button" (click)="SaveDraft()">Save Draft</button>
+      <div class="btn-group">
+        <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+        <button class="btn btn-primary">
+          Next <fa name="angle-right"></fa>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>

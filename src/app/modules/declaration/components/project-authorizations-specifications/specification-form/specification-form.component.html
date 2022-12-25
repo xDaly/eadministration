@@ -1,0 +1,27 @@
+
+<form #specificationForm="ngForm" name="form" (ngSubmit)="specificationForm.form.valid && save()" class="needs-validation">
+  <div class="form-group">
+    <label class="required">Specification title</label>
+    <input class="form-control" name="specificationTitle" #specificationTitle="ngModel" [(ngModel)]="specification.specificationTitle" [disabled]="showData" [ngClass]="{'is-invalid': specificationForm.submitted && specificationTitle.invalid, 'is-valid': specification.specificationTitle }" required>
+  </div>
+  <div class="form-group">
+    <label class="required">Specification number</label>
+    <input class="form-control" type="number" name="specificationNumber" #specificationNumber="ngModel" [(ngModel)]="specification.specificationNumber" [disabled]="showData" [ngClass]="{'is-invalid': specificationForm.submitted && specificationNumber.invalid, 'is-valid': specification.specificationNumber }" required tiaOnlyNumber="true">
+  </div>
+  <div class="form-group">
+    <label class="required">Issue date</label>
+    <div class="input-group">
+      <input class="form-control" name="issueDate" #issueDate="ngModel" [(ngModel)]="specification.issueDate" ngbDatepicker #SpecIssueDate="ngbDatepicker" [disabled]="showData" [ngClass]="{'is-invalid': specificationForm.submitted && issueDate.invalid, 'is-valid': specification.issueDate }" required>
+      <div class="input-group-append">
+        <button [disabled]="showData" class="btn btn-outline-secondary datepicker-btn" (click)="SpecIssueDate.toggle()" type="button"><fa name="calendar"></fa></button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <file-uploader [acceptedFiles]="acceptedFiles" [FileInfo]="specificationInvoice" (fileName)="GetSpecificationUrl($event)"></file-uploader>
+  </div>
+  <div class="btn-group layout-controls">
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</div>
+</form>

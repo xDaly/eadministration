@@ -1,0 +1,218 @@
+<div class="container pd-50" *ngIf="profile">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="upload-btn-wrapper">
+        <div class="picture-preview">
+          <img [src]="profile.picture" [alt]="profile.userName">
+        </div>
+        <input type="file" name="myfile" />
+      </div>
+    </div>
+    <div class="profile-content col-md-9 card">
+      <h2>Edit Profile</h2>
+      <div class="alert alert-warning">
+        <div class="row">
+          <div class="col-8">
+            <fa name="lock" size="lg"></fa>Your email requires confirmation
+          </div>
+          <div class="col-4">
+            <button class="btn btn-sm btn-outline-secondary" (click)="confirmEmail()">
+              <fa name="envelope"></fa> Confrim Email
+            </button>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="profileGroup" (ngSubmit)="updateProfile()">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">First Name</label>
+              <div class="input-group">
+                <input class="form-control" name="first_name" formControlName="firstName">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Last Name</label>
+              <div class="input-group">
+                <input class="form-control" name="last_name" formControlName="lastName">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="control">
+              <label class="required">Email</label>
+              <div class="input-group">
+                <input type="email" class="form-control" name="email" formControlName="email">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="control">
+              <label class="required">ID</label>
+              <select class="custom-select" name="identity_piece" formControlName="identityPiece">
+                <option [value]="0">CIN</option>
+                <option [value]="1">PassPort</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="control">
+              <label class="required">Identity number</label>
+              <div class="input-group">
+                <input type="number" class="form-control" name="identity_piece_number"
+                  formControlName="identityPieceNumber">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Place Of Birth</label>
+              <div class="input-group">
+                <input class="form-control" name="birth_place" formControlName="birthPlace">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Date Of Birth</label>
+              <div class="input-group">
+                <input class="form-control" name="dp" ngbDatepicker #picker="ngbDatepicker" name="birth_date"
+                  formControlName="birthDate">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="picker.toggle()" type="button">
+                    <fa name="calendar"></fa>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label>Nationality</label>
+              <input type="text" class="form-control" [class.is-invalid]="searchFailed" formControlName="nationality"
+                [ngbTypeahead]="search" placeholder="select your nationality" name="nationality" />
+              <span *ngIf="searching">searching...</span>
+              <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Address</label>
+              <div class="input-group">
+                <input class="form-control" name="address" formControlName="address">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Zip / Postal Code</label>
+              <div class="input-group">
+                <input class="form-control" formControlName="zipCode">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="control ml-4">
+              <div class="custom-control-lg custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="isAboard" id="isAboard"
+                  formControlName="isAboard">
+                <label class="custom-control-label" for="isAboard">Tunisien résident à
+                  l'étranger</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="required">Quality</label>
+            <div class="control">
+              <div class="input-group">
+                <select class="custom-select" name="quality" formControlName="quality">
+                  <option [value]="0">Promotor</option>
+                  <option [value]="1">Mondataire</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Social Raison</label>
+              <div class="input-group">
+                <input class="form-control" name="social_reason" formControlName="socialReason">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Diploma</label>
+              <div class="input-group">
+                <input class="form-control" name="diploma" formControlName="diploma">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">TEL/GSM</label>
+              <div class="input-group">
+                <input class="form-control" name="phone_number" formControlName="phoneNumber">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">FAX</label>
+              <div class="input-group">
+                <input class="form-control" name="fax_number" formControlName="faxNumber">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Function</label>
+              <div class="input-group">
+                <input class="form-control" name="job_title" formControlName="jobTitle">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control">
+              <label class="required">Instruction Level</label>
+              <div class="input-group">
+                <input class="form-control" name="instruction_level" formControlName="instructionLevel">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="control">
+              <label class="required">Site Web</label>
+              <div class="input-group">
+                <input class="form-control" name="website" formControlName="webSite">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tia-view-controls d-flex justify-content-between">
+          <button class="btn btn-light" type="submit">Update Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

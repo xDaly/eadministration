@@ -1,0 +1,55 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ modalTitle }}</h4>
+    <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+      <div *ngFor="let s of splatMap">
+        <tia-field [splat]="s" [form]="form"></tia-field>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark" (click)="modal.close(form.value)"
+          [disabled]="!form.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<button (click)="open(content)" class="btn btn-sm btn-primary">
+  <fa name="plus-circle"></fa>Create
+</button>
+<table class="table table-striped" *ngIf="rows">
+  <thead>
+    <ng-container *ngFor="let head of splatMap">
+      <th *ngIf="head.show">{{ head.label }}</th>
+    </ng-container>
+  </thead>
+  <tbody *ngIf="rows[0].id !== 0">
+    <tr *ngFor="let row of rows">
+      <td *ngFor="let col of row | headers : splatMap | keyvalue">{{ col.value }}</td>
+      <td class="actions-control" *ngIf="actions">
+        <div class="d-inline-block" ngbDropdown>
+          <button class="btn" ngbDropdownToggle>
+            <fa name="angle-down"></fa>
+          </button>
+          <div ngbDropdownMenu>
+            <button (click)="edit(content,row)" class="dropdown-item">
+              <fa name="edit"></fa>Edit
+            </button>
+            <button (click)="delete(row)" class="dropdown-item">
+              <fa name="trash"></fa>Delete
+            </button>
+            <button (click)="show(content,row)" class="dropdown-item">
+              <fa name="info"></fa>View Details
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="alert empty-row" role="alert" *ngIf="rows && rows[0].id === 0">No Records to display</div>

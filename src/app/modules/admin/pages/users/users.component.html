@@ -1,0 +1,82 @@
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <div class="container">
+      <h2>{{ user.userName }}</h2>
+      <div class="row">
+        <div class="col-md-8">
+          <fieldset>
+            <legend>GENERAL<span class="badge badge-sm badge-primary" *ngIf="user.isAboard">Is Aboard</span></legend>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input class="form-control" name="first_name" [(ngModel)]="user.firstName">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input class="form-control" name="email" [(ngModel)]="user.email">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input class="form-control" name="last_name" [(ngModel)]="user.lastName">
+                </div>
+                <div class="form-group">
+                  <label>Telephone</label>
+                  <input class="form-control" name="phone_number" [(ngModel)]="user.faxNumber">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-4">
+          <fieldset>
+            <label>ASSIGN PROFILE</label>
+            <div class="form-group">
+              <label for="">Choose role</label>
+              <select name="" id="" class="form-control">
+                <option *ngFor="let role of roles$ | async" [value]="role.id">{{ role.label }}</option>
+              </select>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark" (click)="modal.close()">Save</button>
+  </div>
+</ng-template>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Users</h1>
+    <div class="lead"><button class="btn btn-outline-primary" (click)="addRecord()">New User</button></div>
+  </div>
+</div>
+<div class="container">
+  <ngb-tabset>
+    <ngb-tab title="Users">
+      <ng-template ngbTabContent>
+        <ng2-smart-table #usersTable [settings]="UsersSettings" [source]="users$ | async"
+          (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onSaveConfirm($event)"
+          (custom)="onCustom($event, content)">
+        </ng2-smart-table>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Roles">
+      <ng-template ngbTabContent>
+        <ng2-smart-table #usersTable [settings]="RolesSettings" [source]="roles$ | async"
+          (createConfirm)="onCreateRoleConfirm($event)" (deleteConfirm)="onDeleteRoleConfirm($event)"
+          (editConfirm)="onSaveRoleConfirm($event)">
+        </ng2-smart-table>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Permission Manage">
+      <ng-template ngbTabContent>
+        <tia-permissions></tia-permissions>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+
+</div>

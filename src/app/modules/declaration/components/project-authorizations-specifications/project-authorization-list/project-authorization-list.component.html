@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" sortable="authorisation" (sort)="onSort($event)">authorization title</th>
+      <th scope="col">association</th>
+      <th scope="col">issue date</th>
+      <th scope="col">number</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let authorization of authorizations">
+      <td>{{authorization.authorizationTitle}}</td>
+      <td>{{authorization.association.name}}</td>
+      <td>{{authorization.issueDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{authorization.authorizationNumber}}</td>
+
+      <td>
+        <div class="d-inline-block" ngbDropdown>
+            <button type="button" class="btn" ngbDropdownToggle>
+                <fa name="angle-down" size="lg"></fa>
+            </button>
+            <div ngbDropdownMenu>
+                <button type="button" (click)="action(authorization, 'edit')" class="dropdown-item">
+                  <fa name="edit"></fa>Edit</button>
+                <button type="button" (click)="action(authorization, 'show')" class="dropdown-item">
+                  <fa name="eye"></fa>show</button>
+                <button type="button" (click)="action(authorization, 'delete')" class="dropdown-item">
+                  <fa name="trash"></fa>delete</button>
+            </div>
+        </div>
+    </td>
+
+    </tr>
+  </tbody>
+</table>

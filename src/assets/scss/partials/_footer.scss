@@ -1,0 +1,27 @@
+.top-footer{
+    color: $white;
+    .container{
+        padding: 14px;
+    }
+}
+footer{
+    padding: 25px;
+    background-color: #6c757d;
+    h4{
+        color: $white;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    ul{
+        li > a{
+            color: $light;
+        }
+        list-style: none;
+        padding: 0;
+    }
+
+    .credit{
+        margin: 0;
+        padding: 22px;
+    }
+}

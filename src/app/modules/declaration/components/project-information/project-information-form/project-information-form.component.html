@@ -1,0 +1,192 @@
+<form (ngSubmit)="projectInformationForm.form.valid && save()" name="form" #projectInformationForm="ngForm"
+  class="needs-validation">
+  <fieldset>
+    <legend> Project Information </legend>
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label>Sector</label>
+        <select class="form-control" name="sector" disabled>
+          <option *ngIf="selectedSector" [value]="selectedSector" selected>{{selectedSector.label}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label>Activity</label>
+        <select class="form-control" name="activity" disabled>
+          <option *ngIf="selectedActivity" [value]="selectedActivity" selected>{{selectedActivity.label}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">choose your investment regime</label>
+      <br>
+      <div class="custom-control custom-radio btn-group btn-group-toggle" ngbRadioGroup name="investmentRegime"
+        [(ngModel)]="projectInformation.investmentRegime" required>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="0"> Totaly exportateur
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="1"> Other than totaly exportateur
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">is insert in economic branch ?</label>
+      <br>
+      <div class="custom-control custom-radio btn-group btn-group-toggle" #isInEconomicBranch="ngModel" ngbRadioGroup
+        name="isInEconomicBranch" [(ngModel)]="projectInformation.isInEconomicBranch"
+        [ngClass]="{'is-invalid': projectInformationForm.submitted && isInEconomicBranch.invalid}">
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="true" required> yes
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="false" required> no
+        </label>
+        <div *ngIf="projectInformationForm.submitted && isInEconomicBranch.invalid" class="invalid-feedback">
+          <div *ngIf="isInEconomicBranch.errors.required">
+            please choose wether your project is insert in economic branch or not
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">County</label>
+        <select class="custom-select" name="county" #county="ngModel"
+          [(ngModel)]="projectInformation.countyId" (change)="getDelegations()"
+          [ngClass]="{'is-invalid': projectInformationForm.submitted && county.invalid, 'is-valid': projectInformation.countyId}"
+          required>
+          <option *ngFor="let county of counties" [ngValue]="county.id">{{county.label}}</option>
+        </select>
+        <div *ngIf="projectInformationForm.submitted && county.invalid" class="invalid-feedback">
+          <div *ngIf="county.errors.required">
+            please choose your county
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">Delegation</label>
+        <select  class="custom-select" name="Delegation" #delegation="ngModel"
+          [(ngModel)]="projectInformation.delegationId" (change)="getCommunes()"
+          [ngClass]="{'is-invalid': projectInformationForm.submitted && delegation.invalid, 'is-valid': projectInformation.delegationId}"
+          required>
+          <option *ngFor="let delegation of delegations" [ngValue]="delegation.id">{{delegation.label}}</option>
+        </select>
+        <div *ngIf="projectInformationForm.submitted && delegation.invalid" class="invalid-feedback">
+          <div *ngIf="delegation.errors.required">
+            please choose your delegation
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">Commune</label>
+        <select  class="custom-select" name="commune" #commune="ngModel"
+          [(ngModel)]="projectInformation.communeId"
+          [ngClass]="{'is-invalid': projectInformationForm.submitted && commune.invalid, 'is-valid': projectInformation.communeId}"
+          required>
+          <option *ngFor="let commune of communes" [ngValue]="commune.id">{{commune.label}}</option>
+        </select>
+        <div *ngIf="projectInformationForm.submitted && commune.invalid" class="invalid-feedback">
+          <div *ngIf="commune.errors.required">
+            please choose your commune
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-9 mb-3">
+        <label class="required">Location/Adress</label>
+        <input class="form-control" name="location" #location="ngModel" [(ngModel)]="projectInformation.location"
+          [ngClass]="{'is-invalid': projectInformationForm.submitted && location.invalid, 'is-valid': projectInformation.location}"
+          required>
+        <div *ngIf="projectInformationForm.submitted && location.invalid" class="invalid-feedback">
+          <div *ngIf="location.errors.required">
+            please choose your adress
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3 mb-3">
+        <label>Zip code</label>
+        <input tiaOnlyNumber="true" maxlength="4" class="form-control" name="zipcode" [(ngModel)]="projectInformation.zipCode" [ngClass]="{'is-valid': projectInformation.zipCode}">
+      </div>
+    </div>
+    <div class="form-group" *ngIf="isAgriculture">
+      <label>Homeport</label>
+      <input class="form-control" name="homeport" [(ngModel)]="projectInformation.homePort" [ngClass]="{'is-valid': projectInformation.homePort != ''}">
+
+    </div>
+    <div class="form-group">
+      <label class="required">Total area(m²)</label>
+      <input class="form-control" name="totalArea" #totalArea="ngModel" [(ngModel)]="projectInformation.totalArea"
+        [ngClass]="{'is-invalid': projectInformationForm.submitted && totalArea.invalid, 'is-valid': projectInformation.totalArea}"
+        required tiaOnlyNumber="true">
+      <div *ngIf="projectInformationForm.submitted && totalArea.invalid" class="invalid-feedback">
+        <div *ngIf="totalArea.errors.required">
+          please specify the total area
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isAgriculture" class="form-group" >
+      <label class="required">Exploited land</label>
+      <input class="form-control" name="exploitedArea" #exploitedArea="ngModel" [(ngModel)]="projectInformation.exploitedArea"
+        [ngClass]="{'is-invalid': projectInformationForm.submitted && exploitedArea.invalid, 'is-valid': projectInformation.exploitedArea}"
+        required tiaOnlyNumber="true">
+      <div *ngIf="projectInformationForm.submitted && exploitedArea.invalid" class="invalid-feedback">
+        <div *ngIf="exploitedArea.errors.required">
+          please specify the exploited land
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">Covered area(m²)</label>
+      <input class="form-control" name="coveredArea" #coveredArea="ngModel" [(ngModel)]="projectInformation.coveredArea"
+        [ngClass]="{'is-invalid': projectInformationForm.submitted && coveredArea.invalid, 'is-valid': projectInformation.coveredArea}"
+        required tiaOnlyNumber="true">
+      <div *ngIf="projectInformationForm.submitted && coveredArea.invalid" class="invalid-feedback">
+        <div *ngIf="coveredArea.errors.required">
+          please specify the covered area
+        </div>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="isAgriculture">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Operation nature 1</label>
+        <select class="custom-select" name="firstOperation" #firstOperation="ngModel"
+          [(ngModel)]="projectInformation.firstOperationNatureId"
+          [ngClass]="{'is-invalid': projectInformationForm.submitted && firstOperation.invalid, 'is-valid': projectInformation.firstOperationNatureId}"
+          required>
+          <option *ngFor="let firstOperation of firstOperationNatures" [ngValue]="firstOperation.id">
+            {{firstOperation.label}}</option>
+        </select>
+        <div *ngIf="projectInformationForm.submitted && firstOperation.invalid" class="invalid-feedback">
+          <div *ngIf="firstOperation.errors.required">
+            please choose your first operaion nature
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Operation nature 2</label>
+        <select class="custom-select" name="secondOperation" #secondOperation="ngModel"
+          [(ngModel)]="projectInformation.secondOperationNatureId"
+          [ngClass]="{'is-invalid': projectInformationForm.submitted && secondOperation.invalid, 'is-valid': projectInformation.secondOperationNatureId}"
+          required>
+          <option *ngFor="let secondOperation of secondOperationNatures" [ngValue]="secondOperation.id">
+            {{secondOperation.label}}</option>
+        </select>
+        <div *ngIf="projectInformationForm.submitted && secondOperation.invalid" class="invalid-feedback">
+          <div *ngIf="secondOperation.errors.required">
+            please choose your second operaion nature
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tia-view-controls d-flex justify-content-between">
+      <button class="btn btn-light" type="button" (click)="SaveDraft()">Save Draft</button>
+      <div class="btn-group">
+        <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+        <button class="btn btn-primary" type="submit">
+          Next <fa name="angle-right"></fa>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>

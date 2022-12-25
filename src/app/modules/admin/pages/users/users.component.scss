@@ -1,0 +1,14 @@
+/* headers grid color*/
+:host /deep/ ng2-smart-table thead > tr > th { 
+    .ng2-smart-sort-link, .ng2-smart-action{
+        color: gray;
+    }
+    
+} 
+
+:host /deep/ ng2-smart-table thead > tr > td { 
+    .ng2-smart-action{
+        color: gray;
+    }
+    
+} 

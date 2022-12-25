@@ -1,0 +1,10 @@
+<tia-equipment-list (equipmentOutput)="getEquipement($event)" [equipments]="equipmentsList"></tia-equipment-list>
+<div class="tia-view-controls d-flex justify-content-end">
+    <div class="btn-group">
+        <button (click)="stepperService.backward()" class="btn btn-light" type="button">Previous</button>
+        <button (click)="next()" class="btn btn-primary" type="submit">
+            Next
+            <fa name="angle-right"></fa>
+        </button>
+    </div>
+</div>

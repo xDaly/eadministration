@@ -1,0 +1,52 @@
+<form [formGroup]="productionForm" [ngSwitch]="prod" (ngSubmit)="submit()" >
+  <div class="form-group">
+    <label class="required">product/service</label>
+    <input type="text" class="form-control" name="designation" formControlName="designation">
+  </div>
+  <div class="form-group">
+    <label class="required">Quantity</label>
+    <input class="form-control" name="quantity" formControlName="quantity">
+  </div>
+  <form [formGroup]="agricultureProductionForm" *ngSwitchCase="productionType.agriculure" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label class="required">Irrigated Area (m²)</label>
+      <input type="number" class="form-control" name="areaIrrigated" formControlName="areaIrrigated">
+    </div>
+    <div class="form-group">
+      <label class="required">Dried Area (m²)</label>
+      <input type="number" class="form-control" name="dryArea" formControlName="dryArea">
+    </div>
+    <div class="form-group">
+      <label class="required">Exploited Area (m²)</label>
+      <input type="number" class="form-control" name="exploitedArea" formControlName="exploitedArea">
+    </div>
+  </form>
+  <form [formGroup]="agricultureLastYearProductionForm" *ngSwitchCase="productionType.agriculureLastYear" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label class="required">Area (m²)</label>
+      <input type="number" class="form-control" name="area" formControlName="area">
+    </div>
+  </form>
+  <form [formGroup]="tourismProductionForm" *ngSwitchCase="productionType.tourism" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label class="required">Client Category</label>
+      <input class="form-control" name="area" formControlName="clientCategory">
+    </div>
+  </form>
+  <div class="form-group">
+    <label class="required">Value</label>
+    <input type="number" class="form-control" name="value" formControlName="value">
+  </div>
+  <div class="form-group">
+    <label>Comment</label>
+    <input class="form-control" name="comment" formControlName="comment">
+  </div>
+  <div class="modal-footer">
+    <button 
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="(agricultureProductionForm.invalid || agricultureLastYearProductionForm.invalid || tourismProductionForm.invalid) && productionForm.invalid">
+      Submit
+    </button>
+  </div>
+</form>

@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create</h4>
+  <button (click)="activeModal.dismiss()" class="close" type="button">
+      <span aria-hidn="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<tia-foreign-participation-form [foreignConfig]="foreignConfig" (foreignParticipationOutput)="submit($event)" ></tia-foreign-participation-form>
+</div>
+

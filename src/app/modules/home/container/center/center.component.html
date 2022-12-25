@@ -1,0 +1,16 @@
+<div class="container card">
+  <fieldset>
+    <legend>My requests</legend>
+    <div class="btn-toolbar">
+      <div class="btn-group btn-group-sm segments">
+        <button class="btn btn-outline-primary" *ngFor="let step of stepperService.routes$ | async" step><span stepTitle>{{ step.title }}</span></button>
+      </div>
+    </div>
+    <tia-spinner></tia-spinner>
+    <ng-template #container></ng-template>
+    <div class="container wrapper text-center">
+      <a class="btn btn-lg btn-outline-secondary" [routerLink]="['/service-declaration/create']">Create new
+        declaration</a>
+    </div>
+  </fieldset>
+</div>

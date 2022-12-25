@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Upload documents</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <tia-authorization-form *ngIf="uploadConfig.documentType == 17" [uploadConfig]="uploadConfig" (uploadAuthorization)="save($event)"></tia-authorization-form>
+  <tia-specification-form *ngIf="uploadConfig.documentType == 18" [uploadConfig]="uploadConfig" (uploadSpecification)="save($event)"></tia-specification-form>
+</div>
+

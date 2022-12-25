@@ -1,0 +1,21 @@
+<form (ngSubmit)="submit()">
+  <fieldset>
+    <legend>Requested benefits</legend>
+    <div *ngFor="let item of benefits" class="control">
+      <div class="custom-control-lg custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="checkbox{{ item.id }}" id="checkbox{{ item.id }}"
+          [(ngModel)]="item.isChecked">
+        <label class="custom-control-label" for="checkbox{{ item.id }}">{{ item.label }}</label>
+      </div>
+    </div>
+    <div class="tia-view-controls d-flex justify-content-between">
+      <button class="btn btn-light" type="button" (click)="SaveDraft()">Save Draft</button>
+      <div class="btn-group">
+        <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+        <button class="btn btn-primary" type="submit">
+          Next <fa name="angle-right"></fa>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>

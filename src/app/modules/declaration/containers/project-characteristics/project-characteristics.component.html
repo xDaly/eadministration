@@ -1,0 +1,13 @@
+<fieldset>
+    <legend #form>Project characteristics and funding scheme</legend>
+</fieldset>
+<div class="tia-view-controls d-flex justify-content-between">
+    <button class="btn btn-light" type="button" (click)="SaveDraft()">Save Draft</button>
+    <div class="btn-group">
+        <button (click)="stepperService.backward()" class="btn btn-light" type="button">Previous</button>
+        <button (click)="next()" class="btn btn-primary" type="submit">
+            Next
+            <fa name="angle-right"></fa>
+        </button>
+    </div>
+</div>

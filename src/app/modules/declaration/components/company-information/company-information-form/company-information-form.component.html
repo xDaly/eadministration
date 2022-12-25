@@ -1,0 +1,137 @@
+<form (ngSubmit)="companyInformationForm.form.valid && save()" #companyInformationForm="ngForm" name="form" class="needs-validation">
+  <fieldset>
+    <legend> Information about the company to create</legend>
+    <div class="form-group">
+      <label class="required">Name (business name/ trade name)</label>
+      <input class="form-control" name="businessName" #businessName="ngModel"
+        [(ngModel)]="companyInformation.companyName"
+        [ngClass]="{'is-invalid': companyInformationForm.submitted && businessName.invalid, 'is-valid': companyInformation.companyName}"
+        required>
+      <div *ngIf="companyInformationForm.submitted && businessName.invalid" class="invalid-feedback">
+        <div *ngIf="businessName.errors.required">
+          please put your (business name /trade name)
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">Legal Representative</label>
+      <input class="form-control" name="legalRepresentative" #legalRepresentative="ngModel"
+        [(ngModel)]="companyInformation.legalRepresentative"
+        [ngClass]="{'is-invalid': companyInformationForm.submitted && legalRepresentative.invalid, 'is-valid': companyInformation.legalRepresentative}"
+        required>
+      <div *ngIf="companyInformationForm.submitted && legalRepresentative.invalid" class="invalid-feedback">
+        <div *ngIf="legalRepresentative.errors.required">
+          please put your legal representative
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">Head office</label>
+      <input class="form-control" name="headOffice" #headOffice="ngModel" [(ngModel)]="companyInformation.headOffice"
+        [ngClass]="{'is-invalid': companyInformationForm.submitted && headOffice.invalid, 'is-valid': companyInformation.headOffice}"
+        required>
+      <div *ngIf="companyInformationForm.submitted && headOffice.invalid" class="invalid-feedback">
+        <div *ngIf="headOffice.errors.required">
+          please put your head office
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">Legal form</label>
+      <select class="custom-select" name="legalForm" #legalForm="ngModel" [(ngModel)]="companyInformation.legalFormId"
+        [ngClass]="{'is-invalid': companyInformationForm.submitted && (legalForm.invalid || companyInformation.legalFormId == 0), 'is-valid': companyInformation.legalFormId}"
+        (change)="verifyLegalForm()" required >
+        <option *ngFor="let legalForm of legalForms" [ngValue]="legalForm.id">{{legalForm.label}}</option>
+      </select>
+      <div *ngIf="companyInformation.legalFormId ==0 || companyInformationForm.submitted && legalForm.invalid" class="invalid-feedback">
+        <div *ngIf="companyInformation.legalFormId ==0 || legalForm.errors.required ">
+          please select your legal form
+        </div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="publicSaving">
+      <label>UC legal form</label>
+      <div class="custom-control custom-radio btn-group btn-group-toggle" ngbRadioGroup name="publicSavingCalled"
+        [(ngModel)]="companyInformation.publicSavingCalled">
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="true"> UC call for public savings
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" [value]="false"> UC does not call for public savings
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>activity description</label>
+      <textarea class="form-control" name="activityDescription" #activityDescription="ngModel"
+        [(ngModel)]="companyInformation.activityDescription"
+        [ngClass]="{ 'is-valid': companyInformation.activityDescription}"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="required">Share capital</label>
+      <input class="form-control" type="number" tiaOnlyNumber="true" name="shareCapital" #shareCapital="ngModel"
+        [(ngModel)]="companyInformation.shareCapital"
+        [ngClass]="{'is-invalid': companyInformationForm.submitted && shareCapital.invalid, 'is-valid': companyInformation.shareCapital}"
+        required (change)="verifyShareCapital()">
+      <div *ngIf="companyInformationForm.submitted && shareCapital.invalid" class="invalid-feedback">
+        <div *ngIf="shareCapital.errors.required">
+          please put your share capital
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="required">Amount of foreign equity</label>
+      <div class="input-group">
+        <input class="form-control" type="number" tiaOnlyNumber="true" name="foreignEquityAmount" #foreignEquityAmount="ngModel"
+          [(ngModel)]="companyInformation.foreignEquityAmount" (change)="calculateForeignRate()"
+          [ngClass]="{'is-invalid': companyInformationForm.submitted && foreignEquityAmount.invalid, 'is-valid': companyInformation.foreignEquityAmount}"
+          [disabled]="HasParticipations"
+          required>
+        <div class="input-group-append">
+          <span class="input-group-text"> {{ (companyInformation.foreignEquityAmount * 100 / this.investmentCost).toFixed(2) }}%</span>
+        </div>
+      </div>
+
+      <div *ngIf="companyInformationForm.submitted && foreignEquityAmount.invalid" class="invalid-feedback">
+        <div *ngIf="foreignEquityAmount.errors.required">
+          please put them amount of the foreign equity
+        </div>
+      </div>
+      <div *ngIf="(companyInformation.foreignEquityAmount > investmentcost * 0.7)" class="alert alert-danger">
+        the Foreign equity must be equal or less than 70% of the total investment
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="view-toolbar grid-actions clearfix">
+        <div class="info">
+          <label for="foreign participations" class="required">Foreign participation manifest</label>
+        </div>
+        <div class="pull-right toolbar-actions">
+          <div class="input-group pull-left">
+            <button type="button" class="btn btn-primary btn-sm"
+              [disabled]="verifyForeignEquity()"
+              title="create" (click)="create()">
+              <span class="fa fa-plus-circle" aria-hidden="true"></span> Create
+            </button>
+          </div>
+        </div>
+      </div>
+      <tia-foreign-participation-list [foreignParticipations]="foreignParticipations"
+        (foreignParticipationOutput)="update($event)"></tia-foreign-participation-list>
+      <div>
+      <div class="alert alert-danger"
+        *ngIf="companyInformationForm.submitted && foreignParticipations.length == 0" role="alert">
+        please provide your foreign partners participation informations </div>
+        </div>
+    </div>
+    <div class="tia-view-controls d-flex justify-content-between">
+      <button type="button" class="btn btn-light" (click)="SaveDraft()">Save Draft</button>
+      <div class="btn-group">
+        <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+        <button class="btn btn-primary" type="submit" >
+          Next <fa name="angle-right"></fa>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>

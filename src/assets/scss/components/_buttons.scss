@@ -1,0 +1,27 @@
+.btn-group-sm{
+    .btn{
+        margin: 0;
+    }
+}
+
+.btn-sm {
+    margin: 0;
+}
+
+.btn{
+    border-radius: $btn-radius;
+    
+    &.btn-raised{
+        box-shadow: 0px 1px 8px rgba($color: $dark, $alpha: .5)
+    }
+}
+
+.btn, .dropdown-item{
+    fa{
+        padding: 2px;
+    }
+}
+
+.datepicker-btn{
+    width: 112px;
+}

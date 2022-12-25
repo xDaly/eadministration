@@ -1,0 +1,78 @@
+label{
+    &.required::after{
+        content:"*";
+        color: $primary;
+        margin-left: 8px;
+    }
+}
+
+.control{
+    padding-top: 14px;
+}
+
+
+input, select{
+    &.form-control{
+        border-radius: 10rem;
+    }
+    &.custom-select{
+        border-radius: 10rem;
+    }
+    &.is-invalid{
+        border-radius: 10rem;
+    }
+    &.is-invalid{
+        border-radius: 10rem;
+
+    }
+}
+.is-invalid{
+    border-radius: 10rem;
+
+}
+.btn-primary{
+  &input{
+    width: 20px;
+  }
+}
+
+textarea{
+    &.form-control{
+        border-radius: $sm-radius;
+    }
+    &.custom-select{
+        border-radius: $sm-radius;
+    }
+}
+
+.input-group{
+    &.is-invalid{
+        border-radius: 10rem;
+    }
+    &.is-valid{
+        border-radius: 10rem;
+    }
+    border: 10rem;
+}
+
+.input-group-append{
+    &.is-invalid{
+        border-radius: 10rem;
+    }
+    &.is-valid{
+        border-radius: 10rem;
+    }
+    .input-group-text{
+        border-radius: 0 10rem 10rem 0 !important;
+    }
+}
+
+.layout-controls{
+    float: right;
+    margin-top: 2rem;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

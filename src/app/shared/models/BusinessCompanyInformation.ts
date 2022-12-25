@@ -1,0 +1,30 @@
+import { PromotorType } from './Enums/PromotorType';
+import { ProjectType } from './Enums/ProjectType';
+import { Document } from './document';
+export class BusinessCompanyInformation {
+  companyId: number;
+  declarationId: number;
+  companyName: string;
+  legalRepresentative: string;
+  headOffice: string;
+  legalFormId: number;
+  publicSavingCalled: boolean;
+  activityDescritpion?: string;
+  shareCapital?: number;
+  foreignEquityAmount?: number;
+  foreignEquityRate?: number;
+  capitalIncrease?: number;
+  ownFunds?: number;
+  extensionOwnFunds?: number;
+  phoneNumber?: string;
+  faxNumber?: string;
+  email?: string;
+  legalRepresentativeIdentityPiece?: Document;
+  commercialRegisterCopy?: Document;
+  lastBalanceCheckInvoice?: Document;
+  joinedAccountInvoice?; Document;
+  investmentCost: number;
+  projectType: ProjectType;
+  promotorType: PromotorType;
+  screenId: number;
+}

@@ -1,0 +1,10 @@
+<tia-validation-issue-method-form (deliveryIssueMethod)="getDeliveryMethod($event)" [declaration]="declaration"></tia-validation-issue-method-form>
+<div class="tia-view-controls d-flex justify-content-end">
+    <div class="btn-group">
+        <button (click)="stepperService.backward()" class="btn btn-light" type="button">Previous</button>
+        <button (click)="finish()" class="btn btn-primary">
+            Send
+            <fa name="paper-plane"></fa>
+        </button>
+    </div>
+</div>

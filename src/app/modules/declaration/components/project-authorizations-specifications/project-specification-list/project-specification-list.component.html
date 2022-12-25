@@ -1,0 +1,33 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" sortable="file_name">specification <title></title></th>
+      <th scope="col">specification number</th>
+      <th>issue date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let specification of specifications">
+      <td>{{specification.specificationTitle}}</td>
+      <td>{{specification.specificationNumber}}</td>
+      <td>{{specification.issueDate | date: 'dd/MM/yyyy'}}</td>
+      <td>
+        <div class="d-inline-block" ngbDropdown>
+            <button type="button" class="btn" ngbDropdownToggle>
+                <fa name="angle-down" size="lg"></fa>
+            </button>
+            <div ngbDropdownMenu>
+                <button type="button" (click)="action(specification, 'edit')" class="dropdown-item">
+                    <fa name="edit"></fa>Edit</button>
+                  <button type="button" (click)="action(specification, 'show')" class="dropdown-item">
+                    <fa name="eye"></fa>show</button>
+                <button type="button" (click)="action(specification, 'delete')" class="dropdown-item">
+                    <fa name="trash"></fa>Delete</button>
+            </div>
+        </div>
+    </td>
+
+    </tr>
+  </tbody>
+</table>

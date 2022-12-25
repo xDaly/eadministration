@@ -1,0 +1,45 @@
+<form (ngSubmit)="authorizationForm.form.valid && save()" name="form" #authorizationForm="ngForm" class="needs-validation">
+  <div class="form-group">
+    <label class="required">Authorization title</label>
+    <input class="form-control" name="authorizationTitle" #authorizationTitle="ngModel"
+      [(ngModel)]="authorization.authorizationTitle" [disabled]="showData"
+      [ngClass]="{'is-invalid': authorizationForm.submitted && authorizationTitle.invalid, 'is-valid': authorization.authorizationTitle }"
+      required>
+  </div>
+  <div class="form-group">
+    <label class="required">Association</label>
+    <select class="custom-select" [compareWith]="compareById" name="association" #association="ngModel" [(ngModel)]="authorization.association"
+      [disabled]="showData"
+      [ngClass]="{'is-invalid': authorizationForm.submitted && association.invalid, 'is-valid': authorization.association }" required>
+      <option *ngFor="let association of associations" [ngValue]="association">{{association.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="required">Date of issue</label>
+    <div class="input-group">
+      <input autocomplete="off" class="form-control" placeholder="dd-mm-yyyy" name="issueDate"
+        [(ngModel)]="authorization.issueDate" #issueDate="ngModel" ngbDatepicker #issueDatePicker="ngbDatepicker"
+        [disabled]="showData"
+        [ngClass]="{'is-invalid': authorizationForm.submitted && issueDate.invalid, 'is-valid': authorization.issueDate }"
+        required>
+      <div class="input-group-append">
+        <button [disabled]="showData" class="btn btn-outline-secondary calendar datepicker-btn"
+          (click)="issueDatePicker.toggle()" type="button">
+          <fa name="calendar"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="required">Number </label>
+    <input class="form-control" type="number" name="authorizationNumber" #authorizationNumber="ngModel"
+      [(ngModel)]="authorization.authorizationNumber" [disabled]="showData"
+      [ngClass]="{'is-invalid': authorizationForm.submitted && authorizationId.invalid, 'is-valid': authorization.authorizationNumber }"
+      required tiaOnlyNumber="true">
+  </div>
+  <file-uploader [acceptedFiles]="acceptedFiles" [FileInfo]="authorizationInvoice" (fileName)="GetAuthorizationUrl($event)"></file-uploader>
+
+  <div class="btn-group layout-controls">
+    <button class="btn btn-primary">Save</button>
+  </div>
+</form>

@@ -1,0 +1,25 @@
+<fieldset>
+  <legend>Validation and method of issuing</legend>
+  <form [formGroup]="ValidationIssueForm" (ngSubmit)="submit()" *ngIf="declaration">
+    <label>Delivery mode</label>
+    <div class="form-group">
+      <select class="form-control" formControlName="delivranceMode" name="delivery-mode">
+        <option [value]="1">On Site</option>
+        <option [value]="2">Post mailing</option>
+        <option [value]="3">E-mail</option>
+      </select>
+    </div>
+    <div class="alert" role="alert">
+      The information provided are essential for the processing of the request for declaration. Their absence or
+      inaccuracyautomatically result in the cancellation of the application.
+      Any false declaration will incur the personal responsibility of its author and will expose it to legal
+      proceedings in particular.
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="conditions-valid" name="validate"
+          formControlName="isValidate">
+        <label class="custom-control-label" for="conditions-valid">I have read and I accept <a href="#">the general
+            conditions.</a></label>
+      </div>
+    </div>
+  </form>
+</fieldset>

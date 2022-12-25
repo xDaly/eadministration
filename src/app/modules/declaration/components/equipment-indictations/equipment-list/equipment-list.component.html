@@ -1,0 +1,46 @@
+<fieldset>
+    <legend>Indications on equipment</legend>
+    <button (click)="create()" class="btn btn-sm btn-primary">
+        <fa name="plus-circle"></fa>Create
+    </button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Designation</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total value(TND)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let equipment of equipments">
+                <td>
+                    {{equipment.designation}}</td>
+                <td>
+                    {{equipment.quantity}}</td>
+                <td id="tnd-amount">
+                    {{equipment.value}}</td>
+                <td class="actions-control">
+                    <div class="d-inline-block" ngbDropdown>
+                        <button class="btn" ngbDropdownToggle>
+                            <fa name="angle-down" size="lg"></fa>
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button (click)="edit(equipment)" class="dropdown-item">
+                                <fa name="edit"></fa>Edit</button>
+                            <button (click)="delete(equipment)" class="dropdown-item">
+                                <fa name="trash"></fa>Delete</button>
+                            <button (click)="show(equipment)" class="dropdown-item">
+                                <fa name="info"></fa>View Details</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="equipments && equipments.length === 0" class="alert empty-row" role="alert">There are no records</div>
+    <div *ngIf="equipments && equipments.length > 0"class="d-flex justify-content-between mb-3 mt-3 pt-3 total-invoice" id="total-equipments">
+        <div>Total</div>
+        <div class="amount">{{ totalEquipments }} TND</div>
+    </div>
+</fieldset>

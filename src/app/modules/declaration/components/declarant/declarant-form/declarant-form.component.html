@@ -1,0 +1,247 @@
+<form (ngSubmit)="declarantForm.form.valid && save()" name="form" #declarantForm="ngForm" class="needs-validation">
+  <fieldset>
+    <legend> Information about the declarant</legend>
+    <!--general settings-->
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Qualtiy</label>
+        <select class="custom-select" name="Quality" #quality="ngModel" [(ngModel)]="declarant.quality"
+          [ngClass]="{'is-invalid': declarantForm.submitted && quality.invalid, 'is-valid': declarant.quality != undefined }"
+          (change)="GetQuality()" required>
+          <option *ngFor="let DeclarentQuality of DeclarentQualities | keys" [value]="DeclarentQuality.key">
+            {{DeclarentQuality.value}}</option>
+        </select>
+        <div *ngIf="declarantForm.submitted && quality.invalid" class="invalid-feedback">
+          <div *ngIf="quality.errors.required"> please select the declarant quality</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label>Genre</label>
+        <select class="custom-select" name="gender" [(ngModel)]="declarant.gender"
+          [ngClass]="{'is-valid': declarant.gender}">
+          <option *ngFor="let Gender of Genders | keys" [value]="Gender.key">{{Gender.value}}</option>
+        </select>
+      </div>
+    </div>
+    <!--personal inforamtion-->
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Name</label>
+        <input class="form-control" name="decalrantName" #declarantName="ngModel" [(ngModel)]="declarant.name"
+          [ngClass]="{'is-invalid': declarantForm.submitted && declarantName.invalid, 'is-valid': declarant.name}"
+          required>
+        <div *ngIf="declarantForm.submitted && declarantName.invalid" class="invalid-feedback">
+          <div *ngIf="declarantName.errors.required"> please put the decalrant name</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">First name</label>
+        <input class="form-control" name="declarantFirstName" #declarantFirstName="ngModel"
+          [(ngModel)]="declarant.firstName"
+          [ngClass]="{'is-invalid': declarantForm.submitted && declarantFirstName.invalid, 'is-valid': declarant.firstName}"
+          required>
+        <div *ngIf="declarantForm.submitted && declarantFirstName.invalid" class="invalid-feedback">
+          <div *ngIf="declarantFirstName.errors.required"> please put the decalrant first name</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">Nationality</label>
+        <select class="custom-select" name="Nationality" #nationality="ngModel" [(ngModel)]="declarant.nationalityId"
+          [ngClass]="{'is-invalid': declarantForm.submitted && nationality.invalid, 'is-valid': declarant.nationalityId}"
+          required>
+          <option *ngFor="let country of countries" [value]="country.id">{{country.label}}</option>
+        </select>
+        <div *ngIf="declarantForm.submitted && nationality.invalid" class="invalid-feedback">
+          <div *ngIf="nationality.errors.required"> please choose the decalrant nationality</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">Place of Birth</label>
+        <input class="form-control" name="birthPlace" [(ngModel)]="declarant.birthPlace" #birthPlace="ngModel"
+          [ngClass]="{'is-invalid': declarantForm.submitted && birthPlace.invalid, 'is-valid': declarant.birthPlace}"
+          required>
+        <div *ngIf="declarantForm.submitted && birthPlace.invalid" class="invalid-feedback">
+          <div *ngIf="birthPlace.errors.required"> please choose the decalrant birth place</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">Birth Date</label>
+        <div class="input-group">
+          <input class="form-control" name="birthDate" [(ngModel)]="declarant.birthDate" #birthDate="ngModel"
+            ngbDatepicker #BirthDatePicker="ngbDatepicker"
+            [ngClass]="{'is-invalid': declarantForm.submitted && birthDate.invalid, 'is-valid': declarant.birthDate}"
+            required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar datepicker-btn " (click)="BirthDatePicker.toggle()"
+              type="button">
+              <fa name="calendar"></fa>
+            </button>
+          </div>
+          <div *ngIf="declarantForm.submitted && birthDate.invalid" class="invalid-feedback">
+            <div *ngIf="birthDate.errors.required"> please choose the decalrant birth date</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- studies-->
+    <div *ngIf="isNaturalPerson" class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label>Level of study</label>
+        <input class="form-control" name="studyLevel" #studyLevel="ngModel" [(ngModel)]="declarant.studyLevel"
+          [ngClass]="{'is-valid': declarant.studyLevel}">
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Scientific diploma</label>
+        <input class="form-control" name="diploma" #diploma="ngModel" [(ngModel)]="declarant.scientificDiploma"
+          [ngClass]="{'is-valid': declarant.scientificDiploma}">
+      </div>
+    </div>
+    <!-- Identity document informations-->
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">ID</label>
+        <select class="custom-select" name="idtype" #idType="ngModel" [(ngModel)]="declarant.idType"
+          [ngClass]="{'is-invalid': declarantForm.submitted && idType.invalid, 'is-valid': declarant.idType != undefined}"
+          required>
+          <option *ngFor="let IdentityPieceType of IdentityPieceTypes | keys" [value]="IdentityPieceType.key">
+            {{IdentityPieceType.value}}</option>
+        </select>
+        <div *ngIf="declarantForm.submitted && idType.invalid" class="invalid-feedback">
+          <div *ngIf="idType.errors.required"> please choose the decalrant id type</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Id Number</label>
+        <input maxlength="9" class="form-control" name="identityDocumentId" #identityDocumentId="ngModel"
+          [(ngModel)]="declarant.identityDocumentId"
+          [ngClass]="{'is-invalid': declarantForm.submitted && identityDocumentId.invalid, 'is-valid': declarant.identityDocumentId}"
+          required>
+        <div *ngIf="declarantForm.submitted && identityDocumentId.invalid" class="invalid-feedback">
+          <div *ngIf="identityDocumentId.errors.required"> please put the decalrant id number</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Date of issue</label>
+        <div class="input-group">
+          <input class="form-control" name="issueDate" [(ngModel)]="declarant.issueDate" #issueDate="ngModel"
+            ngbDatepicker #issueDatePicker="ngbDatepicker"
+            [ngClass]="{'is-invalid': declarantForm.submitted && issueDate.invalid, 'is-valid': declarant.issueDate}"
+            required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar datepicker-btn" (click)="issueDatePicker.toggle()"
+              type="button">
+              <fa name="calendar"></fa>
+            </button>
+          </div>
+          <div *ngIf="declarantForm.submitted && issueDate.invalid" class="invalid-feedback">
+            <div *ngIf="issueDate.errors.required"> please choose the decalrant id issue date</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Place of issue</label>
+        <input class="form-control" name="issuePlace" #issuePlcae="ngModel" [(ngModel)]="declarant.issuePlace"
+          [ngClass]="{'is-invalid': declarantForm.submitted && issuePlcae.invalid, 'is-valid': declarant.issuePlace}"
+          required>
+        <div *ngIf="declarantForm.submitted && issuePlcae.invalid" class="invalid-feedback">
+          <div *ngIf="issuePlcae.errors.required"> please put the decalrant id issue place</div>
+        </div>
+      </div>
+    </div>
+    <!-- address-->
+    <div class="form-row">
+      <div class="form-group col-md-3 mb-3">
+        <label class="required">City</label>
+        <input class="form-control" name="city" #city="ngModel" [(ngModel)]="declarant.city"
+          [ngClass]="{'is-invalid': declarantForm.submitted && city.invalid, 'is-valid': declarant.city}" required>
+        <div *ngIf="declarantForm.submitted && city.invalid" class="invalid-feedback">
+          <div *ngIf="city.errors.required"> please put the decalrant city</div>
+        </div>
+      </div>
+      <div class="form-group col-md-7 mb-3">
+        <label class="required">location</label>
+        <input class="form-control" name="Location" #Location="ngModel" [(ngModel)]="declarant.location"
+          [ngClass]="{'is-invalid': declarantForm.submitted && Location.invalid, 'is-valid': declarant.location}"
+          required>
+        <div *ngIf="declarantForm.submitted && Location.invalid" class="invalid-feedback">
+          <div *ngIf="Location.errors.required"> please put the decalrant location</div>
+        </div>
+      </div>
+      <div class="form-group col-md-2 mb-3">
+        <label>Zip code</label>
+        <input type="number" class="form-control" name="zipCode" [(ngModel)]="declarant.zipCode"
+          [ngClass]="{'is-valid': declarant.zipCode}" tiaOnlyNumber="true">
+      </div>
+    </div>
+    <!--contact-->
+    <div class="form-row">
+      <div class="form-group col-md-4 mb-3">
+        <label class="required">Email adress</label>
+        <input email class="form-control" name="email" #email="ngModel" [(ngModel)]="declarant.email"
+          [ngClass]="{'is-invalid': declarantForm.submitted && email.invalid, 'is-valid': email.valid}" required>
+        <div *ngIf="declarantForm.submitted && email.invalid" class="invalid-feedback">
+          <div *ngIf="email.errors.required"> please put the decalrant email</div>
+          <div *ngIf="email.errors.email">Email must be a valid email address</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label class="required">Tel / GSM </label>
+        <ngx-intl-tel-input
+          [cssClass]="{'is-invalid': declarantForm.submitted && phoneNumber.invalid, 'is-valid': phoneNumb, 'form-control': true}"
+          [preferredCountries]="['tn','fr']" [enableAutoCountrySelect]="true" name="phoneNumber" #phoneNumber="ngModel"
+          [(ngModel)]="phoneNumb" required></ngx-intl-tel-input>
+      </div>
+      <div class="form-group col-md-6 mb-3">
+        <label>Fax</label>
+        <ngx-intl-tel-input [cssClass]="{'is-valid': faxNumb, 'form-control': true}" [preferredCountries]="['tn','fr']"
+          [enableAutoCountrySelect]="true" [enablePlaceholder]="true" name="faxNumber" [(ngModel)]="faxNumb">
+        </ngx-intl-tel-input>
+      </div>
+    </div>
+    <!--documents-->
+    <div class="form-group">
+      <div class="view-toolbar grid-actions clearfix">
+        <div class="info">
+          <label for="Identity_Piece" class="required">Identity document :</label>
+        </div>
+
+        <file-uploader [acceptedFiles]="acceptedFiles" [FileInfo]="IdentityDocumentInvoice"
+          (fileName)="GetIdentityDocumentFileName($event)"></file-uploader>
+      </div>
+      <br>
+
+    </div>
+    <div class="alert alert-danger" *ngIf="declarantForm.submitted && !declarant.promotorIdentityDocument" role="alert">
+      please provide your id document
+    </div>
+    <div class="form-group" *ngIf="isAgent">
+      <div class="view-toolbar grid-actions clearfix">
+        <div class="info">
+          <label for="Mandator_Identity_Piece" class="required">Mandator identity document :</label>
+        </div>
+        <file-uploader [acceptedFiles]="acceptedFiles" [FileInfo]="ManadatorDocumentInovice"
+          (fileName)="GetMandatorIdentityDocumentFileName($event)"></file-uploader>
+      </div>
+      <br>
+      <div class="alert alert-danger" *ngIf="declarantForm.submitted && !declarant.mandatorIdentityDocument"
+        role="alert">
+        please provide your mandator id document
+      </div>
+    </div>
+    <div class="tia-view-controls d-flex justify-content-between">
+      <button class="btn btn-light" type="button" (click)="SaveDraft()">Save Draft</button>
+      <div class="btn-group">
+        <button class="btn btn-light" type="button" (click)="stepperService.backward()">Previous</button>
+        <button class="btn btn-primary" type="submit">
+          Next <fa name="angle-right"></fa>
+        </button>
+      </div>
+    </div>
+
+  </fieldset>
+</form>

@@ -1,0 +1,30 @@
+.profile-content{
+    padding: 1.4rem;
+}
+
+.upload-btn-wrapper {
+    overflow: hidden;
+    display: inline-block;
+    top: -32%;
+  }
+  
+  .picture-preview {
+    border: 8px solid whitesmoke;
+    border-radius: 14px;
+    font-size: 20px;
+    img{
+        width: 202px;
+    }
+  }
+  
+  .upload-btn-wrapper input[type=file] {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    &:hover{
+        cursor: pointer;
+    }
+
+  }

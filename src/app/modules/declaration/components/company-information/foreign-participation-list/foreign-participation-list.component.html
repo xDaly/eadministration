@@ -1,0 +1,45 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Participant name</th>
+      <th scope="col">Nationality</th>
+      <th scope="col">Participation Amount</th>
+      <th scope="col">Participation rate</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let foreignParticipation of foreignParticipations">
+      <td>{{foreignParticipation.participantName}}</td>
+      <td>{{foreignParticipation.nationality.label}}</td>
+      <td>{{foreignParticipation.participationAmount}}</td>
+      <td>{{foreignParticipation.participationRate}} %</td>
+      <td>
+        <div class="d-inline-block" ngbDropdown>
+            <button type="button" class="btn" ngbDropdownToggle>
+                <fa name="angle-down" size="lg"></fa>
+            </button>
+            <div ngbDropdownMenu>
+                <button type="button" (click)="updateAction(foreignParticipation, 'edit')" class="dropdown-item">
+                  <fa name="edit"></fa>Edit</button>
+                <button type="button" (click)="updateAction(foreignParticipation, 'delete')" class="dropdown-item">
+                  <fa name="trash"></fa>delete</button>
+            </div>
+        </div>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="foreignParticipations && foreignParticipations.length === 0">
+    <div class="alert empty-row" role="alert">
+      There are no records
+    </div>
+</div>
+<div class="form-row">
+  <div class="col-md-1 mb3">
+    <button type="button" class="btn btn-danger" (click)="updateAction(foreignParticipations, 'clear')">
+      Clear
+    </button>
+  </div>
+</div>

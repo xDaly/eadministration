@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="navidationBar">
+        <ul class="navigationBarLayout">
+            <li class="step" *ngFor="let step of stepperService.routes$ | async" step>
+                <p stepTitle>{{ step.title }}</p>
+            </li>
+        </ul>
+    </div>
+    <div class="card">
+        <tia-spinner></tia-spinner>
+        <ng-template #container></ng-template>
+    </div>
+</div>
