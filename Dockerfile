@@ -8,6 +8,7 @@ run npm install -g @angular/cli@6.2.3
 copy package.json .
 # install nodemodules 
 run npm i --legacy-peer-deps
+run npm i --f
 
 copy . .
 #build angular project 
