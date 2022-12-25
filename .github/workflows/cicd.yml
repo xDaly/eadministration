@@ -11,7 +11,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-        run :  npm install --save-dev  --unsafe-perm node-sass
+      - name: install sass
+        run : npm install --save-dev  --unsafe-perm node-sass
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
