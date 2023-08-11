@@ -1,5 +1,5 @@
 # from imagetag from docker hub
-from node:12.12.0-alpine AS build
+from node:8.3-alpine AS build
 #specify work dir in the container 
 workdir /usr/local/project
 #install angular cli
