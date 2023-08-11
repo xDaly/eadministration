@@ -3,7 +3,7 @@ from node:8.3-alpine AS build
 #specify work dir in the container 
 workdir /usr/local/project
 #install angular cli
-run npm install -g @angular/cli@6.2.3
+run npm install -g @angular/cli@6
 #copy package json 
 copy package.json .
 # install nodemodules 
